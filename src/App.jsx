@@ -1,16 +1,22 @@
 import { useState } from 'react'
 import Header from "./components/Header";
 import Guitar from "./components/Guitar";
+import { db } from './data/db';
 
 function App() {
 
    //State
+    const [data, setData] = useState(db);
+    const [cart, setCart] = useState([]);
+
+    function addToCart(item){
+      
+
+
+      console.log("Se agrego al carrito", item.name);
+      setCart(prevCart => [...prevCart, item]);
+    }
    
-   const [auth, setAuth] = useState(false);
-
-   console.log(auth);
-
-
   return (
     <>
       <Header></Header>
@@ -18,16 +24,13 @@ function App() {
         <h2 className="text-center">Nuestra Colección</h2>
 
         <div className="row mt-5">
-          <Guitar></Guitar>
-          <Guitar></Guitar>
-          <Guitar></Guitar>
-          <Guitar></Guitar>
-          <Guitar></Guitar>
-          <Guitar></Guitar>
-          <Guitar></Guitar>
-          <Guitar></Guitar>
-          <Guitar></Guitar>
-                    
+          {data.map((guitar)=>
+            <Guitar
+            key= {guitar.id} 
+            guitar= {guitar}
+            setCart = {setCart}
+            addToCart= {addToCart} />
+          )}                  
         </div>
       </main>
 
