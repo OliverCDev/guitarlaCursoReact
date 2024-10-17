@@ -10,16 +10,25 @@ function App() {
     const [cart, setCart] = useState([]);
 
     function addToCart(item){
+      const itemExists = cart.findIndex(guitar => guitar.id === item.id);
+      if(itemExists>= 0){
+        console.log("El elemento ya existe")
+        const uptadedCart = [...cart];
+        uptadedCart[itemExists].quantity++;
+        setCart(uptadedCart);
+
+      } else{
+        item.quantity = 1;
+        setCart([...cart, item]);
+      }
       
-
-
-      console.log("Se agrego al carrito", item.name);
-      setCart(prevCart => [...prevCart, item]);
     }
    
   return (
     <>
-      <Header></Header>
+      <Header
+      cart={cart}
+      ></Header>
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
 
